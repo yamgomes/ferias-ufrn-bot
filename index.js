@@ -23,12 +23,8 @@ var client = new Twitter({
   access_token_secret: process.env.access_token_secret,
 });
 
-client.post(
-  "statuses/update",
-  { status: "gente nao sei se vai dar certo espero que sim" },
-  (error, tweet, response) => {
-    if (error) throw error;
-    console.log(tweet); // Tweet body.
-    console.log(response); // Raw response object.
-  }
-);
+client.post("statuses/update", { status: msg }, (error, tweet, response) => {
+  if (error) throw error;
+  console.log(tweet); // Tweet body.
+  console.log(response); // Raw response object.
+});

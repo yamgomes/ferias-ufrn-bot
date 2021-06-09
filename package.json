@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "moment": "^2.29.1",
-    "twit": "^2.2.11"
+    "twitter": "^1.7.1"
   }
 }
