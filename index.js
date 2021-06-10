@@ -5,13 +5,35 @@ var end = new Date(2021, 08, 18);
 var now = new Date();
 var diff = Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24.0));
 var msg = "";
+const adj = [
+  "longos",
+  "míseros",
+  "compridos",
+  "lentos",
+  "tortuosos",
+  "sinuosos",
+  "sofridos",
+  "demorados",
+  "intermináveis",
+  "paulatinos",
+  "traiçoeiros",
+  "perversos",
+  "ridículo",
+  "proparoxítonos",
+  "radicais",
+  "eucariontes",
+  "vagarosos",
+  "robustos",
+  "abençoados",
+  "amaldiçoados",
+];
 
 if (diff == 0) {
   msg = `ACABOUUUUUU!!!!`;
 } else if (diff == 1) {
-  msg = `só mais um dia galera`;
+  msg = `último dia galera`;
 } else if (diff > 1) {
-  msg = `faltam ${diff} dias`;
+  msg = `faltam ${diff} ${adj[Math.floor(Math.random() * adj.length)]} dias`;
 } else {
   msg = `😎🏖`;
 }
