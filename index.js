@@ -4,7 +4,8 @@ const Twitter = require("twitter");
 var end = new Date(2021, 08, 18);
 var now = new Date();
 var diff = Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24.0));
-var msg = "";
+var msg = "",
+  final = "";
 const adj = [
   "longos",
   "míseros",
@@ -36,7 +37,6 @@ const adj = [
   "catastróficos",
   "cínicos",
   "indiferenciáveis",
-  "do que parecem sempre ser os mesmos",
   "hilários",
   "eletrizantes",
   "hidratados",
@@ -45,10 +45,23 @@ const adj = [
   "velozes",
   "furiosos",
   "arretados",
-  "(ou mais)",
   "cintilantes",
   "cheirosos",
   "preguiçosos",
+  "eletrizantes",
+  "inacabáveis",
+  "di... como assim falta esse tanto?#",
+  "bom dia RNs#",
+  '"hoje tem aula de quê tanto?"#',
+  "dias, quase lá meu povo#",
+  "pores-do-sol. ou é por-do-sols? não sei#",
+  "misteriosos",
+  "dolosos e culposos",
+  "oxigenados",
+  "pluricelulares",
+  "variáveis",
+  "calóricos",
+  "voltas desse circular inverso que chamamos de terra#",
 ];
 
 if (diff == 0) {
@@ -56,7 +69,15 @@ if (diff == 0) {
 } else if (diff == 1) {
   msg = `último dia galera`;
 } else if (diff > 1) {
-  msg = `faltam ${diff} ${adj[Math.floor(Math.random() * adj.length)]} dias`;
+  final = adj[Math.floor(Math.random() * adj.length)];
+
+  if (final.substr(-1) != "#") {
+    final = final.concat(" dias");
+  } else {
+    final = final.slice(0, -1);
+  }
+
+  msg = `faltam ${diff} ${final}`;
 } else {
   msg = `😎🏖`;
 }
