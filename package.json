@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "canvas": "^2.8.0",
     "twitter": "^1.7.1"
   }
 }
