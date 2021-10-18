@@ -1,12 +1,13 @@
 const Twitter = require("twitter");
 const { createCanvas, loadImage } = require("canvas");
 
-var start = new Date(2021, 05, 07);
-var end = new Date(2021, 08, 18);
+var start = Date.parse(process.env.start_date);
+var end = Date.parse(process.env.end_date)
 var now = new Date();
-var diff = Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24.0));
+now = now.getTime();
+var diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
 var total = Math.ceil(
-  (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24.0)
+  (end - start) / (1000 * 60 * 60 * 24.0)
 );
 
 var msg = "",
@@ -169,7 +170,7 @@ async function tweetWithImage(message) {
 
 if (diff >= 0) {
   if (diff == 0) {
-    msg = `ACABOUUUUUU!!!!`;
+    msg = `acabou galera!!!! (infelizmente não para todos)`;
   } else if (diff == 1) {
     msg = `último dia galera`;
   } else if (diff > 1) {
