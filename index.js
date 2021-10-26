@@ -181,7 +181,7 @@ if (diff >= 0) {
     } else {
       final = final.slice(0, -1);
     }
-    msg = `faltam ${diff} ${final}`;
+    msg = `faltam ${diff} ${final}\n\nhttps://twitter.com/intent/tweet?text=faltam%20${diff}%20dias%20pras%20f%C3%A9rias%20da%20ufrn!%20acompanhe%20em%20%40feriasdaufrn`;
   }
   tweetWithImage(msg);
 } else {
