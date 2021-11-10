@@ -68,6 +68,32 @@ const adj = [
   "variáveis",
   "calóricos",
   "voltas desse circular inverso que chamamos de terra#",
+  "revolucionários",
+  "ecléticos",
+  "sensatos",
+  "surpreendentes",
+  "inesperados",
+  "tecnológicos",
+  "modernos",
+  "abstratos",
+  "concretos",
+  "feios",
+  "gostosos",
+  "saborosos",
+  "apetitosos",
+  "acadêmicos",
+  "românticos",
+  "defenestrados",
+  "esculachados",
+  "concomitantes",
+  "estapafúrdios",
+  "alvissáricos",
+  "heroicos",
+  "épicos",
+  "homéricos",
+  "euclideanos",
+  "geométricos",
+  "inexoráveis"
 ];
 
 var client = new Twitter({
@@ -181,7 +207,7 @@ if (diff >= 0) {
     } else {
       final = final.slice(0, -1);
     }
-    msg = `faltam ${diff} ${final}\n\nhttps://twitter.com/intent/tweet?text=faltam%20${diff}%20dias%20pras%20f%C3%A9rias%20da%20ufrn!%20acompanhe%20em%20%40feriasdaufrn`;
+    msg = `faltam ${diff} ${final}`;
   }
   tweetWithImage(msg);
 } else {
