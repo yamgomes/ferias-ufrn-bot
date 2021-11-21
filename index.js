@@ -6,7 +6,7 @@ var start = Date.parse(process.env.start_date);
 var end = Date.parse(process.env.end_date)
 var now = new Date();
 now = now.getTime();
-var diff = 7
+var diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
 var total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
 
 var msg = "",
@@ -212,7 +212,7 @@ async function tweetWithImage(message) {
   console.log("Pensando...")
   message += await pensar();
   console.log(message);
-  // await twitterPostImage(image, message);
+  await twitterPostImage(image, message);
 }
 
 if (diff >= 0) {
