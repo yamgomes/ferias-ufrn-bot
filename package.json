@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "canvas": "^2.8.0",
-    "twitter": "^1.7.1"
+    "pensador-api": "^1.0.0",
+    "twitter": "^1.3.0"
   }
 }

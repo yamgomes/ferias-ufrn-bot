@@ -1,17 +1,17 @@
 const Twitter = require("twitter");
 const { createCanvas, loadImage } = require("canvas");
+const pensador = require("pensador-api");
 
 var start = Date.parse(process.env.start_date);
 var end = Date.parse(process.env.end_date)
 var now = new Date();
 now = now.getTime();
-var diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
-var total = Math.ceil(
-  (end - start) / (1000 * 60 * 60 * 24.0)
-);
+var diff = 7
+var total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
 
 var msg = "",
   final = "";
+
 const adj = [
   "longos",
   "míseros",
@@ -87,13 +87,12 @@ const adj = [
   "esculachados",
   "concomitantes",
   "estapafúrdios",
-  "alvissáricos",
   "heroicos",
   "épicos",
   "homéricos",
   "euclideanos",
   "geométricos",
-  "inexoráveis"
+  "inexoráveis",
 ];
 
 var client = new Twitter({
@@ -188,15 +187,37 @@ async function drawProgressBar() {
   return canvas.toBuffer("image/png");
 }
 
+async function pensadorFormatado() {
+  return pensador({
+    term: "qwertyuiopasdfghjklzxcvbnm"[Math.floor(Math.random() * 26)],
+    max: 500,
+  }).then((array) => {
+    frase = array.phrases[Math.floor(Math.random() * array.phrases.length)];
+    fraseFormatada = `${frase.text} (${frase.author})`;
+    return fraseFormatada;
+  });
+}
+
+async function pensar() {
+  pensamento = await pensadorFormatado();
+  while (pensamento.length > 200) {
+    pensamento = pensadorFormatado();
+  }
+  return pensamento;
+}
+
 async function tweetWithImage(message) {
   const image = await drawProgressBar();
-  await twitterPostImage(image, message);
-  console.log("Imagem enviada");
+  message += "\n\npensamento do dia: ";
+  console.log("Pensando...")
+  message += await pensar();
+  console.log(message);
+  // await twitterPostImage(image, message);
 }
 
 if (diff >= 0) {
   if (diff == 0) {
-    msg = `acabou galera!!!! (infelizmente não para todos)`;
+    msg = `acabou galera!!!! (talvez não para todos)`;
   } else if (diff == 1) {
     msg = `último dia galera`;
   } else if (diff > 1) {
