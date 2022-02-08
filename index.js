@@ -217,9 +217,9 @@ async function tweetWithImage(message) {
 
 if (diff >= 0) {
   if (diff == 0) {
-    msg = `acabou galera!!!! (talvez não para todos)`;
+    msg = `acabou galera!!!!`;
   } else if (diff == 1) {
-    msg = `último dia galera`;
+    msg = `último dia!! (talvez não para todos)`;
   } else if (diff > 1) {
     final = adj[Math.floor(Math.random() * adj.length)];
 
