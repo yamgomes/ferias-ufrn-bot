@@ -121,6 +121,7 @@ function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
   if (stroke) {
+    ctx.lineWidth = 5;
     ctx.stroke();
   }
   if (fill) {
@@ -158,31 +159,45 @@ async function twitterPostImage(image, text) {
 }
 
 async function drawProgressBar() {
-  // carregar primeiro as coisas async te poupa de ter 1 milhao de thens
   const logoUFRN = await loadImage("logo.png");
-  const barrinha = await loadImage("barra.png");
+  const barrinha = await loadImage("barranova.png");
 
-  // agora daqui pra frente é so fazer as operacoes normalmente
-  const canvas = createCanvas(1000, 200); // chutei um tamanho
+  const canvasWidth = 1200;
+  const canvasHeight = 675;
+  const progressBarSize = 990;
+
+  const canvas = createCanvas(canvasWidth, canvasHeight);
   const context = canvas.getContext("2d");
   // background
-  context.fillStyle = "#fff";
-  context.fillRect(0, 0, 1000, 200);
+  context.fillStyle = "#1563B0";
+  context.fillRect(0, 0, canvasWidth, canvasHeight);
   // barra de fora
   context.fillStyle = "#c2e1ff";
-  roundRect(context, 75, 105, 830, 20, 5, true, true);
-  // loading bar
+  roundRect(context, 100, 300, 1000, 100, 5, true, true);
+  // barra interna
   context.fillStyle = context.createPattern(barrinha, "repeat");
-  context.fillRect(80, 110, 820 - (820.0 * diff) / total, 10);
-  // barra?
-  context.fillStyle = "#254AA5";
-  context.beginPath();
-  context.moveTo(900 - (820.0 * diff) / total, 100);
-  context.lineTo(910 - (820.0 * diff) / total, 90);
-  context.lineTo(890 - (820.0 * diff) / total, 90);
-  context.fill();
-  // logo
-  context.drawImage(logoUFRN, 825 - (820.0 * diff) / total, 45);
+  context.save();
+  context.translate(105, 305);
+  context.fillRect(
+    0,
+    0,
+    progressBarSize - (progressBarSize * diff) / total,
+    90
+  );
+  context.restore();
+//   // triangulo
+//   context.fillStyle = "#254AA5";
+//   context.beginPath();
+//   context.moveTo(progressBarSize + 105 - (progressBarSize * diff) / total, 270);
+//   context.lineTo(progressBarSize + 125 - (progressBarSize * diff) / total, 250);
+//   context.lineTo(progressBarSize + 85 - (progressBarSize * diff) / total, 250);
+//   context.fill();
+//   // logo
+//   context.drawImage(
+//     logoUFRN,
+//     progressBarSize + 5 - (progressBarSize * diff) / total,
+//     170
+//   );
   // return image
   return canvas.toBuffer("image/png");
 }
