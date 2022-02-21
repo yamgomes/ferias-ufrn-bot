@@ -2,12 +2,12 @@ const Twitter = require("twitter");
 const { createCanvas, loadImage } = require("canvas");
 const pensador = require("pensador-api");
 
-var start = Date.parse(process.env.start_date);
-var end = Date.parse(process.env.end_date)
-var now = new Date();
+const start = Date.parse(process.env.start_date);
+const end = Date.parse(process.env.end_date)
+const now = new Date();
 now = now.getTime();
-var diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
-var total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
+const diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
+const total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
 
 var msg = "",
   final = "";
@@ -95,7 +95,35 @@ const adj = [
   "inexoráveis",
 ];
 
-var client = new Twitter({
+const emojis = [
+  "🔥",
+  "😎",
+  "😁",
+  "😜",
+  "🤪",
+  "🥳",
+  "💆‍♀️",
+  "💃",
+  "🛀",
+  "🙌",
+  "🎆",
+  "🎇",
+  "🍾",
+  "🍷",
+  "🧉",
+  "🍸",
+  "🍹",
+  "🍺",
+  "🍻",
+  "🥂",
+  "🥃",
+  "🥤",
+  "✈",
+  "🏖",
+  "💅"
+]
+
+const client = new Twitter({
   consumer_key: process.env.consumer_key,
   consumer_secret: process.env.consumer_secret,
   access_token_key: process.env.access_token,
@@ -232,7 +260,7 @@ async function tweetWithImage(message) {
 
 if (diff >= 0) {
   if (diff == 0) {
-    msg = `acabou galera!!!!`;
+    msg = `acabou!!!! (menos pra alguns)`;
   } else if (diff == 1) {
     msg = `último dia!! (talvez não para todos)`;
   } else if (diff > 1) {
@@ -247,7 +275,7 @@ if (diff >= 0) {
   }
   tweetWithImage(msg);
 } else {
-  msg = `😎🏖`;
+  msg = `${emojis[Math.floor(Math.random() * emojis.length)]}${emojis[Math.floor(Math.random() * emojis.length)]}`;
   client.post("statuses/update", { status: msg }, (error, tweet, response) => {
     if (error) throw error;
     console.log(tweet); // Tweet body.
