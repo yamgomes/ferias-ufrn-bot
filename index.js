@@ -4,7 +4,7 @@ const pensador = require("pensador-api");
 
 const start = Date.parse(process.env.start_date);
 const end = Date.parse(process.env.end_date)
-const now = new Date();
+var now = new Date();
 now = now.getTime();
 const diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
 const total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
