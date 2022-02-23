@@ -3,7 +3,7 @@ const { createCanvas, loadImage } = require("canvas");
 const pensador = require("pensador-api");
 
 const start = Date.parse(process.env.start_date);
-const end = Date.parse(process.env.end_date)
+const end = Date.parse(process.env.end_date);
 var now = new Date();
 now = now.getTime();
 const diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
@@ -12,6 +12,8 @@ const total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
 var msg = "",
   final = "";
 
+// final com "#": não adiciona "dias" no final
+// final com "@": texto nenhum
 const adj = [
   "longos",
   "míseros",
@@ -93,6 +95,12 @@ const adj = [
   "euclideanos",
   "geométricos",
   "inexoráveis",
+  "sei lá que dia é hoje@",
+  "hoje tô off@",
+  "faltam ■■ dias@",
+  "descubra@",
+  "faltam alguns dias@",
+  "você não vai acreditar em quantos dias faltam@",
 ];
 
 const emojis = [
@@ -120,8 +128,8 @@ const emojis = [
   "🥤",
   "✈",
   "🏖",
-  "💅"
-]
+  "💅",
+];
 
 const client = new Twitter({
   consumer_key: process.env.consumer_key,
@@ -213,19 +221,19 @@ async function drawProgressBar() {
     90
   );
   context.restore();
-//   // triangulo
-//   context.fillStyle = "#254AA5";
-//   context.beginPath();
-//   context.moveTo(progressBarSize + 105 - (progressBarSize * diff) / total, 270);
-//   context.lineTo(progressBarSize + 125 - (progressBarSize * diff) / total, 250);
-//   context.lineTo(progressBarSize + 85 - (progressBarSize * diff) / total, 250);
-//   context.fill();
-//   // logo
-//   context.drawImage(
-//     logoUFRN,
-//     progressBarSize + 5 - (progressBarSize * diff) / total,
-//     170
-//   );
+  //   // triangulo
+  //   context.fillStyle = "#254AA5";
+  //   context.beginPath();
+  //   context.moveTo(progressBarSize + 105 - (progressBarSize * diff) / total, 270);
+  //   context.lineTo(progressBarSize + 125 - (progressBarSize * diff) / total, 250);
+  //   context.lineTo(progressBarSize + 85 - (progressBarSize * diff) / total, 250);
+  //   context.fill();
+  //   // logo
+  //   context.drawImage(
+  //     logoUFRN,
+  //     progressBarSize + 5 - (progressBarSize * diff) / total,
+  //     170
+  //   );
   // return image
   return canvas.toBuffer("image/png");
 }
@@ -252,7 +260,7 @@ async function pensar() {
 async function tweetWithImage(message) {
   const image = await drawProgressBar();
   message += "\n\npensamento do dia: ";
-  console.log("Pensando...")
+  console.log("Pensando...");
   message += await pensar();
   console.log(message);
   await twitterPostImage(image, message);
@@ -264,18 +272,24 @@ if (diff >= 0) {
   } else if (diff == 1) {
     msg = `último dia!! (talvez não para todos)`;
   } else if (diff > 1) {
+
     final = adj[Math.floor(Math.random() * adj.length)];
 
-    if (final.substr(-1) != "#") {
-      final = final.concat(" dias");
-    } else {
+    if (final.slice(-1) == "@") {
       final = final.slice(0, -1);
+      msg = `${final}`;
+    } else if (final.slice(-1) == "#") {
+      final = final.slice(0, -1);
+      msg = `faltam ${diff} ${final}`;
+    } else {
+      msg = `faltam ${diff} ${final} dias`;
     }
-    msg = `faltam ${diff} ${final}`;
   }
   tweetWithImage(msg);
 } else {
-  msg = `${emojis[Math.floor(Math.random() * emojis.length)]}${emojis[Math.floor(Math.random() * emojis.length)]}`;
+  msg = `${emojis[Math.floor(Math.random() * emojis.length)]}${
+    emojis[Math.floor(Math.random() * emojis.length)]
+  }`;
   client.post("statuses/update", { status: msg }, (error, tweet, response) => {
     if (error) throw error;
     console.log(tweet); // Tweet body.
