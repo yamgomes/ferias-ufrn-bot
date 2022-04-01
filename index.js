@@ -6,8 +6,8 @@ const start = Date.parse(process.env.start_date);
 const end = Date.parse(process.env.end_date);
 var now = new Date();
 now = now.getTime();
-const diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
-const total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
+var diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
+var total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
 
 var msg = "",
   final = "";
