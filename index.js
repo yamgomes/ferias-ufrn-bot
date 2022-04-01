@@ -265,8 +265,8 @@ async function tweetWithImage(message) {
   console.log(message);
   await twitterPostImage(image, message);
 }
-
-if (now.getDay() == 1 && now.getMonth() == 3) {
+agora = new Date();
+if (agora.getDay() == 1 && agora.getMonth() == 3) {
   msg = `faltam 250 engraçados dias`;
   diff = 249;
   total = 250;
