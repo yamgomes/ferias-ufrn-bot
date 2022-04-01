@@ -266,13 +266,17 @@ async function tweetWithImage(message) {
   await twitterPostImage(image, message);
 }
 
-if (diff >= 0) {
+if (now.getDay() == 1 && now.getMonth() == 3) {
+  msg = `faltam 250 engraçados dias`;
+  diff = 249;
+  total = 250;
+  tweetWithImage(msg);
+} else if (diff >= 0) {
   if (diff == 0) {
     msg = `acabou!!!! (menos pra alguns)`;
   } else if (diff == 1) {
     msg = `último dia!! (talvez não para todos)`;
   } else if (diff > 1) {
-
     final = adj[Math.floor(Math.random() * adj.length)];
 
     if (final.slice(-1) == "@") {
