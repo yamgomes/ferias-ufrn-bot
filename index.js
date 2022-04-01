@@ -266,7 +266,7 @@ async function tweetWithImage(message) {
   await twitterPostImage(image, message);
 }
 agora = new Date();
-if (agora.getDay() == 1 && agora.getMonth() == 3) {
+// if (agora.getDay() == 1 && agora.getMonth() == 3) {
   msg = `faltam 250 engraçados dias`;
   diff = 249;
   total = 250;
@@ -274,7 +274,7 @@ if (agora.getDay() == 1 && agora.getMonth() == 3) {
   console.log(msg + "\n");
   console.log(`diff ${diff}, total ${total}\n`);
   console.log(`agora ${agora}`);
-}
+// }
 // else if (diff >= 0) {
 //   if (diff == 0) {
 //     msg = `acabou!!!! (menos pra alguns)`;
