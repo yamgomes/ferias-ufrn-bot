@@ -266,41 +266,38 @@ async function tweetWithImage(message) {
   await twitterPostImage(image, message);
 }
 agora = new Date();
-// if (agora.getDay() == 1 && agora.getMonth() == 3) {
+if (agora.getDate() == 1 && agora.getMonth() == 3) {
   msg = `faltam 250 engraçados dias`;
   diff = 249;
   total = 250;
-  // tweetWithImage(msg);
-  console.log(msg + "\n");
-  console.log(`diff ${diff}, total ${total}\n`);
-  console.log(`agora ${agora}`);
-// }
-// else if (diff >= 0) {
-//   if (diff == 0) {
-//     msg = `acabou!!!! (menos pra alguns)`;
-//   } else if (diff == 1) {
-//     msg = `último dia!! (talvez não para todos)`;
-//   } else if (diff > 1) {
-//     final = adj[Math.floor(Math.random() * adj.length)];
+  tweetWithImage(msg);
+}
+else if (diff >= 0) {
+  if (diff == 0) {
+    msg = `acabou!!!! (menos pra alguns)`;
+  } else if (diff == 1) {
+    msg = `último dia!! (talvez não para todos)`;
+  } else if (diff > 1) {
+    final = adj[Math.floor(Math.random() * adj.length)];
 
-//     if (final.slice(-1) == "@") {
-//       final = final.slice(0, -1);
-//       msg = `${final}`;
-//     } else if (final.slice(-1) == "#") {
-//       final = final.slice(0, -1);
-//       msg = `faltam ${diff} ${final}`;
-//     } else {
-//       msg = `faltam ${diff} ${final} dias`;
-//     }
-//   }
-//   tweetWithImage(msg);
-// } else {
-//   msg = `${emojis[Math.floor(Math.random() * emojis.length)]}${
-//     emojis[Math.floor(Math.random() * emojis.length)]
-//   }`;
-//   client.post("statuses/update", { status: msg }, (error, tweet, response) => {
-//     if (error) throw error;
-//     console.log(tweet); // Tweet body.
-//     console.log(response); // Raw response object.
-//   });
-// }
+    if (final.slice(-1) == "@") {
+      final = final.slice(0, -1);
+      msg = `${final}`;
+    } else if (final.slice(-1) == "#") {
+      final = final.slice(0, -1);
+      msg = `faltam ${diff} ${final}`;
+    } else {
+      msg = `faltam ${diff} ${final} dias`;
+    }
+  }
+  tweetWithImage(msg);
+} else {
+  msg = `${emojis[Math.floor(Math.random() * emojis.length)]}${
+    emojis[Math.floor(Math.random() * emojis.length)]
+  }`;
+  client.post("statuses/update", { status: msg }, (error, tweet, response) => {
+    if (error) throw error;
+    console.log(tweet); // Tweet body.
+    console.log(response); // Raw response object.
+  });
+}
