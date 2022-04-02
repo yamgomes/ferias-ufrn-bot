@@ -1,3 +1,4 @@
+require('dotenv').config({path: __dirname + './.env'});
 const Twitter = require("twitter");
 const { createCanvas, loadImage } = require("canvas");
 const pensador = require("pensador-api");
@@ -267,9 +268,9 @@ async function tweetWithImage(message) {
 }
 agora = new Date();
 if (agora.getDate() == 1 && agora.getMonth() == 3) {
-  msg = `faltam 250 engraçados dias`;
-  diff = 249;
-  total = 250;
+  msg = `faltam só 3 dias!`;
+  diff = 3;
+  total = 80;
   tweetWithImage(msg);
 }
 else if (diff >= 0) {
