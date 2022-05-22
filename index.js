@@ -1,4 +1,4 @@
-require('dotenv').config({path: __dirname + './.env'});
+require("dotenv").config({ path: __dirname + "./.env" });
 const Twitter = require("twitter");
 const { createCanvas, loadImage } = require("canvas");
 const pensador = require("pensador-api");
@@ -29,14 +29,11 @@ const adj = [
   "traiçoeiros",
   "perversos",
   "ridículos",
-  "proparoxítonos",
   "radicais",
   "eucariontes",
   "vagarosos",
-  "robustos",
   "abençoados",
   "amaldiçoados",
-  "calcificados",
   "inoxidáveis",
   "rugosos",
   "famigerados",
@@ -51,18 +48,12 @@ const adj = [
   "hidratados",
   "perigosos",
   "duvidosos",
-  "velozes",
-  "furiosos",
+  "velozes e furiosos",
   "arretados",
-  "cintilantes",
-  "cheirosos",
   "preguiçosos",
   "eletrizantes",
   "inacabáveis",
   "di... como assim falta esse tanto?#",
-  "bom dia RNs#",
-  '"hoje tem aula de quê tanto?"#',
-  "dias, quase lá meu povo#",
   "pores-do-sol. ou é por-do-sols? não sei#",
   "misteriosos",
   "dolosos e culposos",
@@ -79,21 +70,14 @@ const adj = [
   "tecnológicos",
   "modernos",
   "abstratos",
-  "concretos",
   "feios",
   "gostosos",
-  "saborosos",
-  "apetitosos",
   "acadêmicos",
   "românticos",
   "defenestrados",
   "esculachados",
-  "concomitantes",
   "estapafúrdios",
-  "heroicos",
   "épicos",
-  "homéricos",
-  "euclideanos",
   "geométricos",
   "inexoráveis",
   "sei lá que dia é hoje@",
@@ -102,6 +86,7 @@ const adj = [
   "descubra@",
   "faltam alguns dias@",
   "você não vai acreditar em quantos dias faltam@",
+  "insuportáveis",
 ];
 
 const emojis = [
@@ -272,12 +257,13 @@ if (agora.getDate() == 1 && agora.getMonth() == 3) {
   diff = 3;
   total = 80;
   tweetWithImage(msg);
-}
-else if (diff >= 0) {
+} else if (diff >= 0) {
   if (diff == 0) {
     msg = `acabou!!!! (menos pra alguns)`;
   } else if (diff == 1) {
     msg = `último dia!! (talvez não para todos)`;
+  } else if (diff == 69) {
+    msg = `faltam 69 😩😩 dias`;
   } else if (diff > 1) {
     final = adj[Math.floor(Math.random() * adj.length)];
 
