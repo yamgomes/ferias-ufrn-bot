@@ -2,6 +2,7 @@ require("dotenv").config({ path: __dirname + "./.env" });
 const Twitter = require("twitter");
 const { createCanvas, loadImage } = require("canvas");
 const pensador = require("pensador-api");
+const pensadorMelhor = require("pensador-melhor.js");
 
 const start = Date.parse(process.env.start_date);
 const end = Date.parse(process.env.end_date);
@@ -230,7 +231,11 @@ async function pensadorFormatado() {
     max: 500,
   }).then((array) => {
     frase = array.phrases[Math.floor(Math.random() * array.phrases.length)];
-    fraseFormatada = `${frase.text} (${frase.author})`;
+    if (frase && frase.text && frase.author) {
+      fraseFormatada = `${frase.text} (${frase.author})`;
+    } else {
+      fraseFormatada = "cabeça vazia, sem pensamento hoje";
+    }
     return fraseFormatada;
   });
 }
