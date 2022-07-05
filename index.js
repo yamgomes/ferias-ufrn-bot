@@ -2,7 +2,7 @@ require("dotenv").config({ path: __dirname + "./.env" });
 const Twitter = require("twitter");
 const { createCanvas, loadImage } = require("canvas");
 const pensador = require("pensador-api");
-const pensadorMelhor = require("scraper-pensador.js");
+const pensadorMelhor = require("./scraper-pensador.js");
 
 const start = Date.parse(process.env.start_date);
 const end = Date.parse(process.env.end_date);
