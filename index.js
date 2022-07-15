@@ -4,6 +4,7 @@ const { createCanvas, loadImage } = require("canvas");
 const pensador = require("pensador-api");
 const pensadorMelhor = require("./scraper-pensador.js");
 
+const dataAgora = new Date();
 const start = Date.parse(process.env.start_date);
 const end = Date.parse(process.env.end_date);
 var now = new Date();
@@ -11,12 +12,9 @@ now = now.getTime();
 var diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24.0));
 var total = Math.ceil((end - start) / (1000 * 60 * 60 * 24.0));
 
-var msg = "",
-  final = "";
-
 // final com "#": não adiciona "dias" no final
 // final com "@": texto nenhum
-const adj = [
+const listaAdjetivos = [
   "longos",
   "míseros",
   "compridos",
@@ -90,7 +88,7 @@ const adj = [
   "insuportáveis",
 ];
 
-const emojis = [
+const listaEmojis = [
   "🔥",
   "😎",
   "😁",
@@ -152,37 +150,7 @@ function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
   }
 }
 
-async function twitterPostImage(image, text) {
-  client.post(
-    "media/upload",
-    { media: image },
-    function (error, media, response) {
-      if (!error) {
-        // If successful, a media object will be returned.
-        console.log(media);
-
-        // Lets tweet it
-        var status = {
-          status: text,
-          media_ids: media.media_id_string, // Pass the media id string
-        };
-
-        client.post(
-          "statuses/update",
-          status,
-          function (error, tweet, response) {
-            if (!error) {
-              console.log(tweet);
-            }
-          }
-        );
-      } else console.log(error);
-    }
-  );
-}
-
-async function drawProgressBar() {
-  const logoUFRN = await loadImage("logo.png");
+async function desenharProgresso() {
   const barrinha = await loadImage("barranova.png");
 
   const canvasWidth = 1200;
@@ -208,88 +176,113 @@ async function drawProgressBar() {
     90
   );
   context.restore();
-  //   // triangulo
-  //   context.fillStyle = "#254AA5";
-  //   context.beginPath();
-  //   context.moveTo(progressBarSize + 105 - (progressBarSize * diff) / total, 270);
-  //   context.lineTo(progressBarSize + 125 - (progressBarSize * diff) / total, 250);
-  //   context.lineTo(progressBarSize + 85 - (progressBarSize * diff) / total, 250);
-  //   context.fill();
-  //   // logo
-  //   context.drawImage(
-  //     logoUFRN,
-  //     progressBarSize + 5 - (progressBarSize * diff) / total,
-  //     170
-  //   );
-  // return image
   return canvas.toBuffer("image/png");
 }
 
-async function pensadorFormatado() {
-  return pensador({
-    term: "qwertyuiopasdfghjklzxcvbnm"[Math.floor(Math.random() * 26)],
-    max: 500,
-  }).then((array) => {
-    frase = array.phrases[Math.floor(Math.random() * array.phrases.length)];
-    if (frase && frase.text && frase.author) {
-      fraseFormatada = `${frase.text} (${frase.author})`;
+async function obterPensamento() {
+  do {
+    listaPensamentos = await pensador({
+      term: "qwertyuiopasdfghjklzxcvbnm"[Math.floor(Math.random() * 26)],
+      max: 500,
+    });
+    if (listaPensamentos == null || listaPensamentos.phrases.length == 0) {
+      return "cabeça vazia, sem pensamento hoje";
     } else {
-      fraseFormatada = "cabeça vazia, sem pensamento hoje";
+      frase =
+        listaPensamentos.phrases[
+          Math.floor(Math.random() * listaPensamentos.phrases.length)
+        ];
+      if (frase && frase.text && frase.author) {
+        fraseFormatada = `${frase.text} (${frase.author})`;
+      } else {
+      }
     }
-    return fraseFormatada;
-  });
-}
-
-async function pensar() {
-  pensamento = await pensadorFormatado();
-  while (pensamento.length > 200) {
-    pensamento = pensadorFormatado();
-  }
+  } while (pensamento.length > 200);
   return pensamento;
 }
 
-async function tweetWithImage(message) {
-  const image = await drawProgressBar();
-  message += "\n\npensamento do dia: ";
-  console.log("Pensando...");
-  message += await pensar();
-  console.log(message);
-  await twitterPostImage(image, message);
+async function tweetWithImage(text) {
+  image = await desenharProgresso();
+  client.post("media/upload", { media: image }, (error, media, response) => {
+    if (!error) {
+      // If successful, a media object will be returned.
+      console.log(media);
+
+      // Lets tweet it
+      var status = {
+        status: text,
+        media_ids: media.media_id_string, // Pass the media id string
+      };
+
+      client.post("statuses/update", status, function (error, tweet, response) {
+        if (!error) {
+          console.log(tweet);
+          console.log("\n================\n");
+          console.log(response);
+        } else {
+          console.log(error);
+        }
+      });
+    } else console.log(error);
+  });
 }
-agora = new Date();
-if (agora.getDate() == 1 && agora.getMonth() == 3) {
-  msg = `faltam só 3 dias!`;
+
+async function tweetWithoutImage(text) {
+  client.post(
+    "statuses/update",
+    { status: text },
+    function (error, tweet, response) {
+      if (!error) {
+        console.log(tweet);
+        console.log("\n================\n");
+        console.log(response);
+      } else {
+        console.log(error);
+      }
+    }
+  );
+}
+
+async function tweetWithImageAndThought(message) {
+  message += "\n\npensamento do dia: ";
+  console.log("Pensando...\n");
+  message += await obterPensamento();
+  console.log(message);
+  await tweetWithImage(message);
+}
+
+if (dataAgora.getDate() == 1 && dataAgora.getMonth() == 3) {
+  // Primeiro de abril
   diff = 3;
   total = 80;
-  tweetWithImage(msg);
+  tuitarComBarraDeProgresso(`faltam só 3 dias!`);
 } else if (diff >= 0) {
+  // Se for antes do fim do semestre
   if (diff == 0) {
-    msg = `acabou!!!! (menos pra alguns)`;
+    tweetWithoutImage(`acabou!!!! (menos pra alguns)`);
   } else if (diff == 1) {
     msg = `último dia!! (talvez não para todos)`;
   } else if (diff == 69) {
     msg = `faltam 69 😩😩 dias`;
   } else if (diff > 1) {
-    final = adj[Math.floor(Math.random() * adj.length)];
-
-    if (final.slice(-1) == "@") {
-      final = final.slice(0, -1);
-      msg = `${final}`;
-    } else if (final.slice(-1) == "#") {
-      final = final.slice(0, -1);
-      msg = `faltam ${diff} ${final}`;
+    // Tweets regulares
+    sufixo = listaAdjetivos[Math.floor(Math.random() * listaAdjetivos.length)];
+    if (sufixo.slice(-1) == "@") {
+      sufixo = sufixo.slice(0, -1);
+      msg = `${sufixo}`;
+    } else if (sufixo.slice(-1) == "#") {
+      sufixo = sufixo.slice(0, -1);
+      msg = `faltam ${diff} ${sufixo}`;
     } else {
-      msg = `faltam ${diff} ${final} dias`;
+      msg = `faltam ${diff} ${sufixo} dias`;
     }
   }
-  tweetWithImage(msg);
+  tweetWithImageAndThought(msg);
 } else {
-  msg = `${emojis[Math.floor(Math.random() * emojis.length)]}${
-    emojis[Math.floor(Math.random() * emojis.length)]
-  }`;
-  client.post("statuses/update", { status: msg }, (error, tweet, response) => {
-    if (error) throw error;
-    console.log(tweet); // Tweet body.
-    console.log(response); // Raw response object.
-  });
+  // Férias. Vida boa
+  tweetWithoutImage(
+    `${listaEmojis[Math.floor(Math.random() * listaEmojis.length)]}${
+      listaEmojis[Math.floor(Math.random() * listaEmojis.length)]
+    }`
+  );
 }
