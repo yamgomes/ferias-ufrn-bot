@@ -10,11 +10,11 @@ module.exports = async function scrapePensamentos(term, depth = 1) {
 
   // substitute spaces for + and put in lowercase
   term = term.replace(/\s/g, "+").toLowerCase();
-  const urlPensador = `${url}busca.php?q=${term}&p=2`;
+  const urlPensador = `${url}busca.php?q=${term}`;
 
   try {
     depthCounter = 1;
-    const { data } = await axios.get(urlPensador);
+    const { data } = await axios.get(urlPensador, { timeout: 10000 });
     const $ = cheerio.load(data);
     const pensamentos = [];
 
@@ -25,7 +25,7 @@ module.exports = async function scrapePensamentos(term, depth = 1) {
       });
     });
 
-    nav = $(".nav");
+    nav = $(".nav").last();
 
     while (depthCounter < depth && nav.text().includes("Próxima >")) {
       depthCounter++;

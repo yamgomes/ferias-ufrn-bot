@@ -116,6 +116,32 @@ const listaEmojis = [
   "💅",
 ];
 
+const listaErro = ["🤔", "🤨", "🤯", "🤪", "🤩"];
+
+const listaPessoas = [
+  "valesca popozuda",
+  "barraca do beijo",
+  "é o tchan",
+  "taylor swift",
+  "buzz lightyear",
+  "baco exu do blues",
+  "xuxa",
+  "turma do balão mágico",
+  "snoop dogg",
+  "sun tzu",
+  "supermães",
+  "david bowie",
+  "djavan",
+  "pandora",
+  "paprika",
+  "para todos os garotos",
+  "Peaky Blinders",
+  "PS. Eu Te Amo",
+  "pyong lee",
+  "manu gavassi",
+  "Filipe Ret",
+];
+
 const client = new Twitter({
   consumer_key: process.env.consumer_key,
   consumer_secret: process.env.consumer_secret,
@@ -179,26 +205,28 @@ async function desenharProgresso() {
   return canvas.toBuffer("image/png");
 }
 
-async function obterPensamento() {
+async function obterPensamento(messageLength) {
   do {
-    listaPensamentos = await pensador({
-      term: "qwertyuiopasdfghjklzxcvbnm"[Math.floor(Math.random() * 26)],
-      max: 500,
-    });
-    if (listaPensamentos == null || listaPensamentos.phrases.length == 0) {
-      return "cabeça vazia, sem pensamento hoje";
-    } else {
-      frase =
-        listaPensamentos.phrases[
-          Math.floor(Math.random() * listaPensamentos.phrases.length)
-        ];
+    retry = false;
+    listaPensamentos = await pensadorMelhor(
+      listaPessoas[Math.floor(Math.random() * listaPessoas.length)],
+      3
+    );
+    if (listaPensamentos != null && listaPensamentos.length > 0) {
+      pensamentoCard =
+        listaPensamentos[Math.floor(Math.random() * listaPensamentos.length)];
       if (frase && frase.text && frase.author) {
         fraseFormatada = `${frase.text} (${frase.author})`;
       } else {
+        retry = true;
+        fraseFormatada = "";
       }
+    } else {
+      retry = true;
+      fraseFormatada = "";
     }
-  } while (pensamento.length > 200);
-  return pensamento;
+  } while (fraseFormatada.length + messageLength > 275 || retry);
+  return fraseFormatada;
 }
 
 async function tweetWithImage(text) {
@@ -246,7 +274,7 @@ async function tweetWithoutImage(text) {
 async function tweetWithImageAndThought(message) {
   message += "\n\npensamento do dia: ";
   console.log("Pensando...\n");
-  message += await obterPensamento();
+  message += await obterPensamento(message.length);
   console.log(message);
   await tweetWithImage(message);
 }
