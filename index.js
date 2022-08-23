@@ -140,6 +140,7 @@ const listaPessoas = [
   "pyong lee",
   "manu gavassi",
   "Filipe Ret",
+  "jô soares"
 ];
 
 const client = new Twitter({
@@ -213,7 +214,7 @@ async function obterPensamento(messageLength) {
       3
     );
     if (listaPensamentos != null && listaPensamentos.length > 0) {
-      pensamentoCard =
+      frase =
         listaPensamentos[Math.floor(Math.random() * listaPensamentos.length)];
       if (frase && frase.text && frase.author) {
         fraseFormatada = `${frase.text} (${frase.author})`;
