@@ -199,7 +199,7 @@ async function desenharProgresso() {
   context.fillRect(
     0,
     0,
-    progressBarSize - progressBarSize * (diff / total) * (diff / total),
+    progressBarSize - progressBarSize * Math.sqrt(diff / total),
     90
   );
   context.restore();
