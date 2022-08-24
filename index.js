@@ -207,12 +207,21 @@ async function desenharProgresso() {
 }
 
 async function obterPensamento(messageLength) {
+  if (process.argv.length == 3 || process.argv.length == 5) {
+    pessoaPesquisada = process.argv[-1];
+  } else {
+    pessoaPesquisada = "";
+  }
   do {
     retry = false;
-    listaPensamentos = await pensadorMelhor(
-      listaPessoas[Math.floor(Math.random() * listaPessoas.length)],
-      3
-    );
+    if (pessoaPesquisada == "") {
+      listaPensamentos = await pensadorMelhor(
+        listaPessoas[Math.floor(Math.random() * listaPessoas.length)],
+        3
+      );
+    } else {
+      listaPensamentos = await pensadorMelhor(pessoaPesquisada, 3);
+    }
     if (listaPensamentos != null && listaPensamentos.length > 0) {
       frase =
         listaPensamentos[Math.floor(Math.random() * listaPensamentos.length)];
@@ -226,6 +235,7 @@ async function obterPensamento(messageLength) {
       retry = true;
       fraseFormatada = "";
     }
+    pessoaPesquisada = "";
   } while (fraseFormatada.length + messageLength > 275 || retry);
   return fraseFormatada;
 }
