@@ -140,7 +140,7 @@ const listaPessoas = [
   "pyong lee",
   "manu gavassi",
   "Filipe Ret",
-  "jô soares"
+  "jô soares",
 ];
 
 const client = new Twitter({
@@ -199,7 +199,7 @@ async function desenharProgresso() {
   context.fillRect(
     0,
     0,
-    progressBarSize - (progressBarSize * diff) / total,
+    progressBarSize - progressBarSize * (diff / total) * (diff / total),
     90
   );
   context.restore();
