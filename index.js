@@ -1,4 +1,4 @@
-import "dotenv";
+import dotenv from "dotenv";
 dotenv.config({ path: __dirname + "./.env" });
 import drawProgressBar from "./progressBar.js";
 import getQuote from "./quotes.js";
