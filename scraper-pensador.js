@@ -12,6 +12,8 @@ export default async function (term, depth = 1) {
   // substitute spaces for + and put in lowercase
   term = term.replace(/\s/g, "+").toLowerCase();
   const urlPensador = `${url}busca.php?q=${term}`;
+  let nav;
+  let depthCounter;
 
   try {
     depthCounter = 1;
@@ -35,8 +37,8 @@ export default async function (term, depth = 1) {
       const $2 = load(data);
       $2(".thought-card").each(function (i, e) {
         pensamentos.push({
-          author: $(this).find("a").first().text(),
-          text: $(this).find("p").first().text().replace(/\n/g, ""),
+          author: $(this).find("a").first().text().replace(/\n/g, ""),
+          text: $(this).find("p").first().text(),
         });
       });
     }
