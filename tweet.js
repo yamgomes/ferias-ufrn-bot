@@ -1,18 +1,15 @@
 import dotenv from "dotenv";
-dotenv.config({ path: __dirname + "./.env" });
+dotenv.config({ path: "./.env" });
 import Twitter from "twitter";
 
-getClient = () => {
-  return new Twitter({
+
+export async function tweetWithMedia(text, image) {
+  let client = new Twitter({
     consumer_key: process.env.consumer_key,
     consumer_secret: process.env.consumer_secret,
     access_token_key: process.env.access_token,
     access_token_secret: process.env.access_token_secret,
-  });
-};
-
-export async function tweetWithMedia(text, image) {
-  client = getClient();
+  })
   client.post("media/upload", { media: image }, (error, media, response) => {
     if (!error) {
       // If successful, a media object will be returned.
@@ -38,7 +35,12 @@ export async function tweetWithMedia(text, image) {
 }
 
 export async function tweetWithoutMedia(text) {
-  client = getClient();
+  let client = new Twitter({
+    consumer_key: process.env.consumer_key,
+    consumer_secret: process.env.consumer_secret,
+    access_token_key: process.env.access_token,
+    access_token_secret: process.env.access_token_secret,
+  })
   client.post(
     "statuses/update",
     { status: text },

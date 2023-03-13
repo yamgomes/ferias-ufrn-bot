@@ -160,7 +160,7 @@ export function newEnding() {
 }
 
 export function newEmoji(quantity = 1) {
-  returnString = "";
+  let returnString = "";
   for (let i = 0; i < quantity; i++) {
     returnString += listEmojis[Math.floor(Math.random() * listEmojis.length)];
   }

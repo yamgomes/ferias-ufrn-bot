@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({ path: __dirname + "./.env" });
+dotenv.config({ path:"./.env" });
 import drawProgressBar from "./progressBar.js";
 import getQuote from "./quotes.js";
 import { newEmoji, newEnding } from "./lists.js";
