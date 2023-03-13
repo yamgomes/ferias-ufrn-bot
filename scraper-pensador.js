@@ -1,4 +1,5 @@
-import { get } from "axios";
+import pkg from "axios";
+const { get } = pkg;
 import { load } from "cheerio";
 // import pretty from "pretty";
 const url = "https://www.pensador.com/";
