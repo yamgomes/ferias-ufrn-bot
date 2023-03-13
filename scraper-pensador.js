@@ -1,9 +1,9 @@
-const axios = require("axios"),
-  cheerio = require("cheerio"),
-  pretty = require("pretty"),
-  url = "https://www.pensador.com/";
+import { get } from "axios";
+import { load } from "cheerio";
+// import pretty from "pretty";
+const url = "https://www.pensador.com/";
 
-module.exports = async function scrapePensamentos(term, depth = 1) {
+export default async function (term, depth = 1) {
   if (term === undefined) {
     throw new Error("A search term must be defined");
   }
@@ -14,8 +14,8 @@ module.exports = async function scrapePensamentos(term, depth = 1) {
 
   try {
     depthCounter = 1;
-    const { data } = await axios.get(urlPensador, { timeout: 10000 });
-    const $ = cheerio.load(data);
+    const { data } = await get(urlPensador, { timeout: 10000 });
+    const $ = load(data);
     const pensamentos = [];
 
     $(".thought-card").each(function (i, e) {
@@ -30,8 +30,8 @@ module.exports = async function scrapePensamentos(term, depth = 1) {
     while (depthCounter < depth && nav.text().includes("Próxima >")) {
       depthCounter++;
       const nextPage = `${urlPensador}&p=${depthCounter}`;
-      const { data } = await axios.get(nextPage);
-      const $2 = cheerio.load(data);
+      const { data } = await get(nextPage);
+      const $2 = load(data);
       $2(".thought-card").each(function (i, e) {
         pensamentos.push({
           author: $(this).find("a").first().text(),
