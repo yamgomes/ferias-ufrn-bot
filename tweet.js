@@ -1,6 +1,7 @@
-require("dotenv").config({ path: __dirname + "./.env" });
+import "dotenv"
+dotenv.config({ path: __dirname + "./.env" });
+import Twitter from "twitter";
 
-const Twitter = require("twitter");
 getClient = () => {
   return new Twitter({
     consumer_key: process.env.consumer_key,
