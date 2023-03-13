@@ -25,14 +25,14 @@ async function run() {
   }
   // primeiro de abril
   if (currentDate.getDate() == 1 && currentDate.getMonth() == 3) {
-    image = await drawProgressBar(3, 101);
+    let image = await drawProgressBar(3, 101);
     tweetWithMedia(
       `faltam só ${Math.floor(Math.random() * 3) + 3} dias`,
       image
     );
     return;
   }
-  image = await drawProgressBar(timeDifference, timeTotal);
+  let image = await drawProgressBar(timeDifference, timeTotal);
   // 69 dias
   if (timeDifference == 69) {
     tweetWithMedia(`faltam ${timeDifference} dias 🥵`, image);
@@ -44,7 +44,8 @@ async function run() {
     return;
   }
   // Tweets regulares
-  ending = newEnding();
+  let ending = newEnding();
+  let tweetText = ""
   if (ending.slice(-1) == "@") {
     ending = ending.slice(0, -1);
     tweetText = `${ending}`;
@@ -57,7 +58,7 @@ async function run() {
   getQuote(tweetText.length).then((quote) => {
     tweetWithMedia(`${tweetText}\n\n${quote}`, image);
   });
-  tweetWithImageAndThought(tweetText);
+  return;
 }
 
 run();
