@@ -48,4 +48,4 @@ export default async function (term, depth = 1) {
     console.log(err);
     return [];
   }
-};
+}

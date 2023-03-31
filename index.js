@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({ path:"./.env" });
+dotenv.config({ path: "./.env" });
 import drawProgressBar from "./progressBar.js";
 import getQuote from "./quotes.js";
 import { newEmoji, newEnding } from "./lists.js";
@@ -45,7 +45,7 @@ async function run() {
   }
   // Tweets regulares
   let ending = newEnding();
-  let tweetText = ""
+  let tweetText = "";
   if (ending.slice(-1) == "@") {
     ending = ending.slice(0, -1);
     tweetText = `${ending}`;
