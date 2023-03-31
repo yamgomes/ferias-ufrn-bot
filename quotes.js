@@ -1,4 +1,4 @@
-import pensadorMelhor from "./scraper-pensador.js";
+import pensadorScraper from "./scraper-pensador.js";
 import { newPerson } from "./lists.js";
 
 export async function getQuote(messageLength = 1, pessoaPesquisada = "") {
@@ -8,9 +8,9 @@ export async function getQuote(messageLength = 1, pessoaPesquisada = "") {
   do {
     retry = false;
     if (pessoaPesquisada == "") {
-      let listaPensamentos = await pensadorMelhor(newPerson(), 3);
+      let listaPensamentos = await pensadorScraper(newPerson(), 3);
     } else {
-      listaPensamentos = await pensadorMelhor(pessoaPesquisada, 3);
+      listaPensamentos = await pensadorScraper(pessoaPesquisada, 3);
     }
     let fraseFormatada = "";
     if (listaPensamentos != null && listaPensamentos.length > 0) {

@@ -4,7 +4,7 @@ import { load } from "cheerio";
 // import pretty from "pretty";
 const url = "https://www.pensador.com/";
 
-export default async function (term, depth = 1) {
+export async function pensadorScraper(term, depth = 1) {
   if (term === undefined) {
     throw new Error("A search term must be defined");
   }
