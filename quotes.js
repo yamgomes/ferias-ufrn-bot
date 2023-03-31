@@ -1,20 +1,14 @@
 import pensadorMelhor from "./scraper-pensador.js";
-import {newPerson} from "./lists.js";
+import { newPerson } from "./lists.js";
 
-export default async function (messageLength, pessoaPesquisada = "") {
-  if (process.argv.length == 3 || process.argv.length == 5) {
-    pessoaPesquisada = process.argv[-1];
-  }
+export async function getQuote(messageLength = 1, pessoaPesquisada = "") {
   let listaPensamentos = null;
   let fraseFormatada = "";
   let retry = false;
   do {
-    let retry = false;
+    retry = false;
     if (pessoaPesquisada == "") {
-      let listaPensamentos = await pensadorMelhor(
-        newPerson(),
-        3
-      );
+      let listaPensamentos = await pensadorMelhor(newPerson(), 3);
     } else {
       listaPensamentos = await pensadorMelhor(pessoaPesquisada, 3);
     }
@@ -35,4 +29,4 @@ export default async function (messageLength, pessoaPesquisada = "") {
     pessoaPesquisada = "";
   } while (fraseFormatada.length + messageLength > 275 || retry);
   return fraseFormatada;
-};
+}
