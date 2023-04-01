@@ -1,32 +1,27 @@
-import pensadorScraper from "./scraper-pensador.js";
+import { pensadorScraper } from "./scraper-pensador.js";
 import { newPerson } from "./lists.js";
 
-export async function getQuote(messageLength = 1, pessoaPesquisada = "") {
-  let listaPensamentos = null;
-  let fraseFormatada = "";
-  let retry = false;
-  do {
-    retry = false;
-    if (pessoaPesquisada == "") {
-      let listaPensamentos = await pensadorScraper(newPerson(), 3);
-    } else {
-      listaPensamentos = await pensadorScraper(pessoaPesquisada, 3);
+export async function getQuote(
+  messageLength = 0,
+  pessoaPesquisada = newPerson()
+) {
+  for (let counter = 0; counter < 5; counter++) {
+    let listaPensamentos = await pensadorScraper(pessoaPesquisada, 3);
+    if (listaPensamentos.length < 1) {
+      pessoaPesquisada = newPerson();
+      continue;
     }
-    let fraseFormatada = "";
-    if (listaPensamentos != null && listaPensamentos.length > 0) {
-      let frase =
-        listaPensamentos[Math.floor(Math.random() * listaPensamentos.length)];
-      if (frase && frase.text && frase.author) {
-        fraseFormatada = `${frase.text}\n${frase.author.trim()}`;
-      } else {
-        retry = true;
-        fraseFormatada = "";
-      }
-    } else {
-      retry = true;
-      fraseFormatada = "";
-    }
-    pessoaPesquisada = "";
-  } while (fraseFormatada.length + messageLength > 275 || retry);
-  return fraseFormatada;
+
+    let frase =
+      listaPensamentos[Math.floor(Math.random() * listaPensamentos.length)];
+
+    if (!(frase && frase.text && frase.author)) continue;
+
+    let fraseFormatada = `${frase.text}\n— ${frase.author.trim()}`;
+
+    if (fraseFormatada.length + messageLength > 275) continue;
+
+    return fraseFormatada;
+  }
+  return "";
 }
