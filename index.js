@@ -20,14 +20,14 @@ async function run() {
   }
   // último dia
   if (timeDifference == 0) {
-    tweetWithoutMedia(`acabou eu acho!`);
+    tweetWithoutMedia(`acabou (eu acho)!`);
     return;
   }
   // primeiro de abril
   if (currentDate.getDate() == 1 && currentDate.getMonth() == 3) {
     let image = await drawProgressBar(3, 101);
     tweetWithMedia(
-      `faltam só ${Math.floor(Math.random() * 3) + 3} dias`,
+      `faltam só ${Math.floor(Math.random() * 3) + 3} dias!!!\n\nA inimiga é a pressa da perfeição\n— Sun Tzu`,
       image
     );
     return;
