@@ -54,11 +54,3 @@ export async function tweetWithoutMedia(text) {
     }
   );
 }
-
-export async function tweetWithImageAndThought(message) {
-  message += "\n\npensamento do dia: ";
-  console.log("Pensando...\n");
-  message += await obterPensamento(message.length);
-  console.log(message);
-  await tweetWithImage(message);
-}
