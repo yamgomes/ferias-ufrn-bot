@@ -49,8 +49,7 @@ export default async function (current, total) {
   context.fillRect(
     0,
     0,
-    progressBarSize - progressBarSize * Math.pow(current / total, 2),
-    // alternativa: Math.log(1 + (49 * current) / total)) / Math.log(50)
+    progressBarSize - (progressBarSize * 1.0 * current) / total,
     90
   );
   context.restore();
