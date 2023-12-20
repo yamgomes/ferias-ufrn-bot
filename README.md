@@ -1,6 +1,6 @@
 # **Bot das Férias UFRN**
 
-### Esse é o código do [Bot @feriasdaufrn](https://twitter.com/feriasdaufrn) que está atualmente hospedado no [Heroku](https://www.heroku.com/).
+### Esse é o código que comandava o [Bot @feriasdaufrn](https://twitter.com/feriasdaufrn).
 
 Inspirado pelo [Bot de férias da USP](https://twitter.com/SpFerias), mas foram adicionadas **RISADAS** (**R**ecursos **I**nterativos de **S**uperação de **A**lcance e **D**istribuição **A**umentada de **S**orriso) que incluem:
 
@@ -8,7 +8,9 @@ Inspirado pelo [Bot de férias da USP](https://twitter.com/SpFerias), mas foram 
 - Frases inspiradoras do [pensador.com](https://www.pensador.com/) (que tiveram que ser [raspadas](https://pt.wikipedia.org/wiki/Raspagem_de_dados) pois o site não fornece API pública)
 - Barra de progresso (inspirado pela página [Progress Bar 202\_](https://twitter.com/ProgressBar202_))
 
-O código está (relativamente) limpo, modularizado e comentado o suficiente para que qualquer um com conhecimento não muito avançado de JavaScript consiga acompanhar a lógica para se [inspirar](https://pt.wikipedia.org/wiki/Licen%C3%A7a_MIT). Abaixo está uma explicação da função de cada arquivo. Se você deseja fazer um bot simples que só publica frases aleatórias, você só precisa da lógica contida nos três primeiros arquivos (ou você pode fazer em Python como o cara da USP fez porque é muito mais fácil).
+O código está (relativamente) limpo, modularizado e comentado o suficiente para que qualquer um com conhecimento não muito avançado de JavaScript consiga acompanhar a lógica para se [inspirar](https://pt.wikipedia.org/wiki/Licen%C3%A7a_MIT). Abaixo está uma explicação da função de cada arquivo. Se você deseja fazer um bot simples que só publica frases aleatórias, você só precisa da lógica contida nos três primeiros arquivos (ou você pode fazer em Python como o da USP está implementado porque é muito mais fácil).
+
+Após mudanças na API do XTwitter, o código não funciona mais. Não há biblioteca que realize as operações e eu acho que a documentação da API para publicar com imagens meio que... sumiu? Além disso, o bot estava hospedado no Heroku, mas eles não têm mais um plano gratuito então lá se foi a hospedagem também.
 
 ## **index.js**
 
